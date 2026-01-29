@@ -1,0 +1,19 @@
+{
+  "name": "book-notes-project",
+  "version": "1.0.0",
+  "description": "Capstone project making a website book notes",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.13.4",
+    "body-parser": "^2.2.2",
+    "ejs": "^4.0.1",
+    "express": "^5.2.1",
+    "pg": "^8.17.2"
+  }
+}
