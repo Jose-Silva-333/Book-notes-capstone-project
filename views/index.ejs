@@ -11,11 +11,17 @@
 </p>
 <hr />
 
+<% for(let book of books){%>
+
 <a>
-    <img/>
+    <img src="<%=book.coverUrl%>"/>
     <h3>
-        
+        <%=book.title%>
     </h3>
 </a>
+
+<% } %>
+
+<hr />
 
 <%- include('partials/footer.ejs'); -%>

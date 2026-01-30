@@ -18,8 +18,27 @@ db.connect();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+async function getBooks() {
+  try {
+    const result = await db.query("SELECT * FROM books;");
+
+    return result.rows.map(book => ({
+      ...book,
+      coverUrl: book.isbn
+        ? `https://covers.openlibrary.org/b/isbn/${book.isbn}-M.jpg`
+        : null,
+    }));
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
+
 app.get("/", async (req, res) => {
-  res.render("index.ejs");
+  const books = await getBooks();
+  res.render("index.ejs", {
+    books: books
+  });
 });
 
 app.listen(port, () => {
