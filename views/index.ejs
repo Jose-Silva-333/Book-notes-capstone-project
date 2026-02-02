@@ -8,21 +8,42 @@
 <p>
     You can sort the entries however you like — by <a href="/?orderBy=title">title</a>, <a href="/?orderBy=finished_reading">most recent</a>, or <a href="/?orderBy=rating">highest rated</a>.
 </p>
+<% if (editing === false) { %>
+<a href="/?edit=true"><button>Edit page</button></a>
+<% } else { %>
+<a href="/"><button>Done</button></a>
+<% } %>
 <hr />
 
 <% for(let book of books){%>
 
+<% if(editing === false) { %>
 <a href="/notes/<%= book.id %>">
     <img src="<%= book.coverUrl %>"/>
     <h3>
         <%=book.title%>
     </h3>
 </a>
+<% } else { %>
+<div>
+    <img src="<%= book.coverUrl %>"/>
+    <h3>
+        <%=book.title%>
+    </h3>
+</div>
+<% } %>
 <p>Date finished: <%= new Date(book.finished_reading).toLocaleDateString() %></p>
 <p>Rating: <%= book.rating %>/5 &#9733</p>
 <p><%= book.description %></p>
+<% if(editing === false) { %>
 <p>Check out my notes on <a href="/notes/<%= book.id %>">this link.</a></p>
+<% } else { %>
+<p>Check out my notes on this link.</p>
+<% } %>
+<% } %>
 
+<% if(editing === true) { %>
+<a href="/add"><button>Add Book</button></a>
 <% } %>
 
 <hr />

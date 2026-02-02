@@ -1,0 +1,22 @@
+<%- include('partials/header.ejs'); -%>
+
+<h2>Add book</h2>
+
+<form action="/add" method="post">
+    <label for="title">Book title</label>
+    <input type="text" id="title">
+
+    <label for="description">Book description</label>
+    <input type="text" id="description">
+
+    <label for="rating">Book rating</label>
+    <input type="number" id="rating">
+
+    <label for="finished_reading">Ending date</label>
+    <input type="text" id="finished_reading">
+
+    <label for="isbn">ISBN</label>
+    <input type="number" id="isbn">
+</form>
+
+<%- include('partials/footer.ejs'); -%>

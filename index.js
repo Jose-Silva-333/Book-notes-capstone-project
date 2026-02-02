@@ -45,10 +45,17 @@ async function getBooks(order) {
 
 app.get("/", async (req, res) => {
   const order = req.query.orderBy;
+  const edit = req.query.edit;
+  let editing = false;
+
+  if(edit) {
+    editing = true;
+  }
 
   const books = await getBooks(order);
   res.render("index.ejs", {
-    books: books
+    books: books,
+    editing: editing
   });
 });
 
@@ -77,8 +84,11 @@ app.get("/notes/:bookId", async (req, res) => {
   } catch (err) {
     console.error(err);
   }
-
 });
+
+app.get("/add", (req, res) => {
+  res.render("add-book.ejs");
+})
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
