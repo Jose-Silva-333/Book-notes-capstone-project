@@ -1,0 +1,20 @@
+<%- include('partials/header.ejs'); -%>
+
+    <h2><%= book.title %></h2>
+    <p><%= book.description %></p>
+    <p>Rating: <%= book.rating %>/5</p>
+        
+    <% if (book.coverUrl) { %>
+        <img src="<%= book.coverUrl %>" alt="<%= book.title %> cover">
+    <% } %>
+        
+    <h2>Notes</h2>
+    <% if (notes && notes.length > 0) { %>
+        <% notes.forEach(note => { %>
+            <p><%= note.body_text || note.text %></p>
+        <% }); %>
+    <% } else { %>
+        <p>No notes yet.</p>
+    <% } %>
+
+<%- include('partials/footer.ejs'); -%>

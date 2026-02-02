@@ -18,9 +18,19 @@ db.connect();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-async function getBooks() {
+async function getBooks(order) {
   try {
-    const result = await db.query("SELECT * FROM books;");
+
+    let query = "SELECT * FROM books";
+
+    if (order) {
+      query += ` ORDER BY ${order} DESC`;
+    }
+    else {
+      query += ";";
+    }
+
+    const result = await db.query(query);
 
     return result.rows.map(book => ({
       ...book,
@@ -30,15 +40,44 @@ async function getBooks() {
     }));
   } catch (err) {
     console.error(err);
-    throw err;
   }
 }
 
 app.get("/", async (req, res) => {
-  const books = await getBooks();
+  const order = req.query.orderBy;
+
+  const books = await getBooks(order);
   res.render("index.ejs", {
     books: books
   });
+});
+
+app.get("/notes/:bookId", async (req, res) => {
+  const bookId = req.params.bookId;
+
+  try {
+    const bookResult = await db.query("SELECT * FROM books WHERE id = $1", [bookId]);
+
+    if (bookResult.rows.length === 0) {
+      return res.status(404).send("Book not found");
+    }
+
+    const book = bookResult.rows[0];
+
+    book.coverUrl = book.isbn 
+      ? `https://covers.openlibrary.org/b/isbn/${book.isbn}-M.jpg`
+      : null;
+
+    const notesResult = await db.query("SELECT * FROM notes WHERE book_id = ($1)", [bookId]);
+
+    res.render("book-notes.ejs", {
+      book: book,
+      notes: notesResult.rows
+    })
+  } catch (err) {
+    console.error(err);
+  }
+
 });
 
 app.listen(port, () => {
