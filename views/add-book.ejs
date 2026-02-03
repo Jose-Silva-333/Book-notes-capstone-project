@@ -4,19 +4,21 @@
 
 <form action="/add" method="post">
     <label for="title">Book title</label>
-    <input type="text" id="title">
+    <input type="text" name="title" id="title" required>
 
     <label for="description">Book description</label>
-    <input type="text" id="description">
+    <textarea name="description" id="description" required></textarea>
 
     <label for="rating">Book rating</label>
-    <input type="number" id="rating">
+    <input type="number" name="rating" id="rating" required>
 
     <label for="finished_reading">Ending date</label>
-    <input type="text" id="finished_reading">
+    <input type="date" name="finished_reading" id="finished_reading" required>
 
     <label for="isbn">ISBN</label>
-    <input type="number" id="isbn">
+    <input type="number" name="isbn" id="isbn" required>
+
+    <button type="submit">Submit book</button>
 </form>
 
 <%- include('partials/footer.ejs'); -%>

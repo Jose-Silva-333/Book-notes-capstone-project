@@ -75,7 +75,7 @@ app.get("/notes/:bookId", async (req, res) => {
       ? `https://covers.openlibrary.org/b/isbn/${book.isbn}-M.jpg`
       : null;
 
-    const notesResult = await db.query("SELECT * FROM notes WHERE book_id = ($1)", [bookId]);
+    const notesResult = await db.query("SELECT * FROM notes WHERE book_id = $1", [bookId]);
 
     res.render("book-notes.ejs", {
       book: book,
@@ -88,7 +88,25 @@ app.get("/notes/:bookId", async (req, res) => {
 
 app.get("/add", (req, res) => {
   res.render("add-book.ejs");
-})
+});
+
+app.post("/add", async (req, res) => {
+  const title = req.body.title;
+  const description = req.body.description;
+  const rating = req.body.rating;
+  const finished_reading = req.body.finished_reading;
+  const isbn = req.body.isbn;
+
+  try {
+    await db.query("INSERT INTO books (title, description, rating, finished_reading, isbn) " +
+                    "VALUES ($1, $2, $3, $4, $5);", [title, description, rating, finished_reading, isbn]);
+
+    res.redirect("/?edit=true");
+  }
+  catch (err) {
+    console.error(err);
+  }
+});
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
