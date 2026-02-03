@@ -15,7 +15,7 @@
 <% } %>
 <hr />
 
-<% for(let book of books){%>
+<% for(let book of books) { %>
 
 <% if(editing === false) { %>
 <a href="/notes/<%= book.id %>">
@@ -39,11 +39,12 @@
 <p>Check out my notes on <a href="/notes/<%= book.id %>">this link.</a></p>
 <% } else { %>
 <p>Check out my notes on this link.</p>
+<a href="/edit/<%= book.id %>"><button>Edit Book</button></a>
 <% } %>
 <% } %>
 
 <% if(editing === true) { %>
-<a href="/add"><button>Add Book</button></a>
+<br /><a href="/add"><button>Add Book</button></a>
 <% } %>
 
 <%- include('partials/footer.ejs'); -%>

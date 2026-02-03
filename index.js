@@ -87,7 +87,24 @@ app.get("/notes/:bookId", async (req, res) => {
 });
 
 app.get("/add", (req, res) => {
-  res.render("add-book.ejs");
+  res.render("book-form.ejs");
+});
+
+app.get("/edit/:bookId", async (req, res) => {
+  const bookId = req.params.bookId;
+
+  try {
+    const result = await db.query("SELECT * FROM books WHERE id = $1", [bookId]);
+
+    console.log(result.rows[0]);
+
+    res.render("book-form.ejs", {
+      book: result.rows[0]
+    });
+  }
+  catch (err) {
+    console.error(err);
+  }
 });
 
 app.post("/add", async (req, res) => {
