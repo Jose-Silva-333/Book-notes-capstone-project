@@ -9,7 +9,7 @@
     You can sort the entries however you like — by <a href="/?orderBy=title">title</a>, <a href="/?orderBy=finished_reading">most recent</a>, or <a href="/?orderBy=rating">highest rated</a>.
 </p>
 <% if (editing === false) { %>
-<a href="/?edit=true"><button>Edit page</button></a>
+<a href="/?edit=true"><button>Edit Book list</button></a>
 <% } else { %>
 <a href="/"><button>Done</button></a>
 <% } %>
@@ -38,7 +38,6 @@
 <% if(editing === false) { %>
 <p>Check out my notes on <a href="/notes/<%= book.id %>">this link.</a></p>
 <% } else { %>
-<p>Check out my notes on this link.</p>
 <a href="/edit/<%= book.id %>"><button>Edit Book</button></a>
 <button onclick="deleteBook(<%= book.id %>)">Delete Book</button>
 <% } %>

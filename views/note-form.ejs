@@ -1,0 +1,16 @@
+<%- include('partials/header.ejs'); -%>
+
+<h2><%= note ? 'Edit' : 'Add' %> note to <%= note.book_name %></h2>
+
+<form action="<%= note ? `/edit/note/${note.id}` : '/add' %>" method="post">
+
+    <label for="body_text">Note Text:</label>
+    <textarea name="body_text" id="body_text" required><%= note.body_text %></textarea>
+
+    <button type="submit">Submit Note</button>
+
+</form>
+
+<a href="/notes/<%= book.id %>?edit=true"><button>Cancel</button></a>
+
+<%- include('partials/footer.ejs'); -%>

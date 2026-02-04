@@ -1,5 +1,13 @@
 <%- include('partials/header.ejs'); -%>
 
+    <% if (editing === false) { %>
+        <a href="/"><button>Back to book list</button></a>
+    <a href="/notes/<%= book.id %>?edit=true"><button>Edit Notes list</button></a>
+    <% } else { %>
+    <a href="/notes/<%= book.id %>"><button>Done</button></a>
+    <% } %>
+    <hr />
+
     <h2><%= book.title %></h2>
     <p><%= book.description %></p>
     <p>Rating: <%= book.rating %>/5</p>
@@ -15,6 +23,9 @@
         <% }); %>
     <% } else { %>
         <p>No notes yet.</p>
+    <% } %>
+    <% if (editing === true) { %>
+    <a href="/notes/add/<%= book.id %>"><button>Add Note</button></a>
     <% } %>
 
 <%- include('partials/footer.ejs'); -%>
