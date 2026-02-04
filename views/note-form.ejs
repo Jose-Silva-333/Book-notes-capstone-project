@@ -11,6 +11,6 @@
 
 </form>
 
-<a href="/notes/<%= book.id %>?edit=true"><button>Cancel</button></a>
+<a href="/notes/<%= note ? note.book_id : book.id %>?edit=true"><button>Cancel</button></a>
 
 <%- include('partials/footer.ejs'); -%>

@@ -136,14 +136,16 @@ app.get("/edit/:bookId", async (req, res) => {
   }
 });
 
-app.get("notes/edit/:noteId", async (req, res) => {
+app.get("/notes/edit/:noteId", async (req, res) => {
   const noteId = req.params.noteId;
 
   try {
-    const result = await db.query("SELECT * FROM books WHERE id = $1", [noteId]);
+    const result = await db.query("SELECT * FROM notes WHERE id = $1", [noteId]);
 
-    res.render("book-form.ejs", {
-      book: book
+    let note = result.rows[0];
+
+    res.render("note-form.ejs", {
+      note: note
     });
   }
   catch (err) {
@@ -198,6 +200,22 @@ app.post("/notes/add/:bookId", async (req, res) => {
   } catch (err) {
     console.error(err);
   }
+});
+
+app.post("/notes/edit/:noteId", async (req, res) => {
+  const noteId = req.params.noteId;
+  const body_text = req.body.body_text;
+
+  try {
+    const result = await db.query("UPDATE notes SET body_text = $1 WHERE id = $2 RETURNING book_id;", [body_text, noteId]);
+
+    const bookId = result.rows[0].book_id;
+
+    res.redirect(`/notes/${bookId}?edit=true`);
+  } catch (err) {
+    console.error(err);
+  }
+
 });
 
 app.delete("/:bookId", async (req, res) => {
