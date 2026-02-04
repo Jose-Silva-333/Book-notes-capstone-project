@@ -109,7 +109,8 @@ app.get("/notes/add/:bookId", async (req, res) => {
     let book = result.rows[0];
 
     res.render("note-form.ejs", {
-      book: book
+      book: book,
+      note: null
     });
   }
   catch (err) {
@@ -181,6 +182,19 @@ app.post("/edit/:bookId", async (req, res) => {
       [title, description, rating, finished_reading, isbn, bookId]);
 
     res.redirect("/?edit=true");
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+app.post("/notes/add/:bookId", async (req, res) => {
+  const bookId = req.params.bookId;
+  const body_text = req.body.body_text;
+
+  try {
+    await db.query("INSERT INTO notes (body_text, book_id) VALUES ($1, $2);", [body_text, bookId]);
+
+    res.redirect(`/notes/${bookId}?edit=true`);
   } catch (err) {
     console.error(err);
   }
