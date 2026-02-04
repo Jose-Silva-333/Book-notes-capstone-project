@@ -40,6 +40,7 @@
 <% } else { %>
 <p>Check out my notes on this link.</p>
 <a href="/edit/<%= book.id %>"><button>Edit Book</button></a>
+<button onclick="deleteBook(<%= book.id %>)">Delete Book</button>
 <% } %>
 <% } %>
 
@@ -48,3 +49,24 @@
 <% } %>
 
 <%- include('partials/footer.ejs'); -%>
+
+<script>
+function deleteBook(bookId) {
+  if (confirm('Are you sure you want to delete this book?')) {
+    fetch(`/${bookId}`, {
+      method: 'DELETE'
+    })
+    .then(response => {
+      if (response.ok) {
+        window.location.reload();
+      } else {
+        alert('Failed to delete book');
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Error deleting book');
+    });
+  }
+}
+</script>

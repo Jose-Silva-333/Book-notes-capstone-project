@@ -96,10 +96,11 @@ app.get("/edit/:bookId", async (req, res) => {
   try {
     const result = await db.query("SELECT * FROM books WHERE id = $1", [bookId]);
 
-    console.log(result.rows[0]);
+    let book = result.rows[0];
+    book.finished_reading = book.finished_reading.toISOString().split("T")[0];
 
     res.render("book-form.ejs", {
-      book: result.rows[0]
+      book: book
     });
   }
   catch (err) {
@@ -122,6 +123,20 @@ app.post("/add", async (req, res) => {
   }
   catch (err) {
     console.error(err);
+  }
+});
+
+app.delete("/:bookId", async (req, res) => {
+  const bookId = req.params.bookId;
+
+  try {
+    await db.query("DELETE FROM books WHERE id = $1", [bookId]);
+
+    res.status(200).json({message: "Book deleted successfully"});
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({error: "Server error"});
   }
 });
 
