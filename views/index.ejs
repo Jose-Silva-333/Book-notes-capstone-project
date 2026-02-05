@@ -10,9 +10,9 @@
       You can sort the entries however you like — by <a href="/?orderBy=title">title</a>, <a href="/?orderBy=finished_reading">most recent</a>, or <a href="/?orderBy=rating">highest rated</a>.
   </p>
   <% if (editing === false) { %>
-  <a href="/?edit=true"><button>Edit Book list</button></a>
+  <a href="/?edit=true"><button class="btn">Edit Book list</button></a>
   <% } else { %>
-  <a href="/"><button>Done</button></a>
+  <a href="/"><button class="btn">Done</button></a>
 <% } %>
 </div>
 <hr />
@@ -40,15 +40,15 @@
   <% if(editing === false) { %>
   <p>Check out my notes on <a href="/notes/<%= book.id %>">this link.</a></p>
   <% } else { %>
-  <a href="/edit/<%= book.id %>"><button>Edit Book</button></a>
-  <button onclick="deleteBook(<%= book.id %>)">Delete Book</button>
+  <a href="/edit/<%= book.id %>"><button class="btn">Edit Book</button></a>
+  <button onclick="deleteBook(<%= book.id %>)" class="btn">Delete Book</button>
   <% } %>
 </div>
 <% } %>
 
 <% if(editing === true) { %>
 <div class="add-button">
-<br /><a href="/add"><button>Add Book</button></a>
+<br /><a href="/add"><button class="btn">Add Book</button></a>
 </div>
 <% } %>
 

@@ -1,16 +1,21 @@
 <%- include('partials/header.ejs'); -%>
 
-<h2><%= note ? 'Edit' : 'Add' %> note to <%= note ? note.book_title : book.title %></h2>
+<h2><%= note ? 'Edit note from' : 'Add note to' %> "<%= note ? note.book_title : book.title %>"</h2>
 
-<form action="<%= note ? `/notes/edit/${note.id}` : `/notes/add/${book.id}` %>" method="post">
+<form action="<%= note ? `/notes/edit/${note.id}` : `/notes/add/${book.id}` %>" method="post" class="form-layout">
 
     <label for="body_text">Note Text:</label>
-    <textarea name="body_text" id="body_text" required><%= note ? note.body_text : '' %></textarea>
+    <textarea name="body_text" id="body_text" rows="5" required><%= note ? note.body_text : '' %></textarea>
 
-    <button type="submit">Submit Note</button>
-
+    <div class="form-buttons">
+        <button type="submit" class="btn">
+            <%= note ? 'Update' : 'Submit' %> note
+        </button>
+        <button type="button" class="btn" 
+                onclick="window.location.href='/notes/<%= note ? note.book_id : book.id %>?edit=true'">
+            Cancel
+        </button>
+    </div>
 </form>
-
-<a href="/notes/<%= note ? note.book_id : book.id %>?edit=true"><button>Cancel</button></a>
 
 <%- include('partials/footer.ejs'); -%>

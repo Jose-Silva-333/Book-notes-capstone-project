@@ -140,7 +140,7 @@ app.get("/notes/edit/:noteId", async (req, res) => {
   const noteId = req.params.noteId;
 
   try {
-    const result = await db.query("SELECT * FROM notes WHERE id = $1", [noteId]);
+    const result = await db.query("SELECT notes.id, notes.body_text, notes.book_id, books.title AS book_title FROM notes LEFT JOIN books ON books.id = notes.book_id WHERE notes.id = $1", [noteId]);
 
     let note = result.rows[0];
 

@@ -2,12 +2,12 @@
 
 <h2><%= book ? 'Edit' : 'Add' %> book</h2>
 
-<form action="<%= book ? `/edit/${book.id}` : '/add' %>" method="post">
+<form action="<%= book ? `/edit/${book.id}` : '/add' %>" method="post" class="form-layout">
     <label for="title">Book title</label>
     <input type="text" name="title" id="title" value="<%= book ? book.title : '' %>" required>
 
     <label for="description">Book description</label>
-    <textarea name="description" id="description" required><%= book ? book.description : '' %></textarea>
+    <textarea name="description" id="description" rows="5" required><%= book ? book.description : '' %></textarea>
 
     <label for="rating">Book rating</label>
     <input type="number" name="rating" id="rating" value="<%= book ? book.rating : '' %>" required>
@@ -18,8 +18,15 @@
     <label for="isbn">ISBN</label>
     <input type="text" name="isbn" id="isbn" value="<%= book ? book.isbn : '' %>" required>
 
-    <button type="submit"><%= book ? 'Update' : 'Submit' %> book</button>
+    <div class="form-buttons">
+        <button type="submit" class="btn">
+            <%= book ? 'Update' : 'Submit' %> book
+        </button>
+        <button type="button" class="btn" 
+                onclick="window.location.href='/?edit=true'">
+            Cancel
+        </button>
+    </div>
 </form>
-<a href="/?edit=true"><button>Cancel</button></a>
 
 <%- include('partials/footer.ejs'); -%>

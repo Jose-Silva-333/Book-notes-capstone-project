@@ -1,10 +1,10 @@
 <%- include('partials/header.ejs'); -%>
 
     <% if (editing === false) { %>
-        <a href="/"><button>Back to book list</button></a>
-    <a href="/notes/<%= book.id %>?edit=true"><button>Edit Notes list</button></a>
+        <a href="/"><button class="btn">Back to book list</button></a>
+    <a href="/notes/<%= book.id %>?edit=true"><button class="btn">Edit Notes list</button></a>
     <% } else { %>
-    <a href="/notes/<%= book.id %>"><button>Done</button></a>
+    <a href="/notes/<%= book.id %>"><button class="btn">Done</button></a>
     <% } %>
     <hr />
 
@@ -21,16 +21,18 @@
         <% notes.forEach(note => { %>
             <p><%= note.body_text %></p>
             <% if (editing === true) { %>
-            <a href="/notes/edit/<%= note.id %>"><button>Edit Note</button></a>
-            <button onclick="deleteNote(<%= note.id %>)">Delete Note</button>
+            <a href="/notes/edit/<%= note.id %>"><button class="btn">Edit Note</button></a>
+            <button class="btn" onclick="deleteNote(<%= note.id %>)">Delete Note</button>
             <% } %>
         <% }); %>
     <% } else { %>
         <p>No notes yet.</p>
     <% } %>
     <% if (editing === true) { %>
+    <div class="add-button">
     <br />
-    <a href="/notes/add/<%= book.id %>"><button>Add Note</button></a>
+    <a href="/notes/add/<%= book.id %>"><button class="btn">Add Note</button></a>
+    </div>
     <% } %>
 
 <%- include('partials/footer.ejs'); -%>
