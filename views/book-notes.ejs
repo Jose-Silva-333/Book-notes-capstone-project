@@ -20,13 +20,38 @@
     <% if (notes && notes.length > 0) { %>
         <% notes.forEach(note => { %>
             <p><%= note.body_text %></p>
+            <% if (editing === true) { %>
             <a href="/notes/edit/<%= note.id %>"><button>Edit Note</button></a>
+            <button onclick="deleteNote(<%= note.id %>)">Delete Note</button>
+            <% } %>
         <% }); %>
     <% } else { %>
         <p>No notes yet.</p>
     <% } %>
     <% if (editing === true) { %>
+    <br />
     <a href="/notes/add/<%= book.id %>"><button>Add Note</button></a>
     <% } %>
 
 <%- include('partials/footer.ejs'); -%>
+
+<script>
+function deleteNote(noteId) {
+  if (confirm('Are you sure you want to delete this note?')) {
+    fetch(`/notes/${noteId}`, {
+      method: 'DELETE'
+    })
+    .then(response => {
+      if (response.ok) {
+        window.location.reload();
+      } else {
+        alert('Failed to delete note');
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Error deleting note');
+    });
+  }
+}
+</script>

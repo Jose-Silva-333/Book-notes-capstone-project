@@ -1,0 +1,23 @@
+main {
+    margin: 0 15% 0 15%;
+}
+
+.book-section {
+    margin: 4px;
+    clear: both;
+}
+
+.book-cover-img {
+    float: left;
+    margin-right: 15px;
+    margin-bottom: 10px;
+}
+
+.footer {
+    clear: both;
+}
+
+.add-button {
+    clear: both;
+}
+

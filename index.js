@@ -232,6 +232,20 @@ app.delete("/:bookId", async (req, res) => {
   }
 });
 
+app.delete("/notes/:noteId", async (req, res) => {
+  const noteId = req.params.noteId;
+
+  try {
+    await db.query("DELETE FROM notes WHERE id = $1", [noteId]);
+
+    res.status(200).json({message: "Note deleted successfully"});
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({error: "Server error"});
+  }
+})
+
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

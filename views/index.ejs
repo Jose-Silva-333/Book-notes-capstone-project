@@ -1,50 +1,55 @@
 <%- include('partials/header.ejs'); -%>
 
-<h2>Thoughts Inspired by Books I've Read</h2>
-<p>
-    This website collects some of the analysis and reflections I've written about books I've read over the years.
-    I'm not a prolific reader, but I'll keep this page updated as I add new titles to my reading history.
-</p>
-<p>
-    You can sort the entries however you like — by <a href="/?orderBy=title">title</a>, <a href="/?orderBy=finished_reading">most recent</a>, or <a href="/?orderBy=rating">highest rated</a>.
-</p>
-<% if (editing === false) { %>
-<a href="/?edit=true"><button>Edit Book list</button></a>
-<% } else { %>
-<a href="/"><button>Done</button></a>
+<div>
+  <h2>Thoughts Inspired by Books I've Read</h2>
+  <p>
+      This website collects some of the analysis and reflections I've written about books I've read over the years.
+      I'm not a prolific reader, but I'll keep this page updated as I add new titles to my reading history.
+  </p>
+  <p>
+      You can sort the entries however you like — by <a href="/?orderBy=title">title</a>, <a href="/?orderBy=finished_reading">most recent</a>, or <a href="/?orderBy=rating">highest rated</a>.
+  </p>
+  <% if (editing === false) { %>
+  <a href="/?edit=true"><button>Edit Book list</button></a>
+  <% } else { %>
+  <a href="/"><button>Done</button></a>
 <% } %>
+</div>
 <hr />
 
 <% for(let book of books) { %>
-
-<% if(editing === false) { %>
-<a href="/notes/<%= book.id %>">
-    <img src="<%= book.coverUrl %>"/>
-    <h3>
-        <%=book.title%>
-    </h3>
-</a>
-<% } else { %>
-<div>
-    <img src="<%= book.coverUrl %>"/>
-    <h3>
-        <%=book.title%>
-    </h3>
+<div class="book-section">
+  <% if(editing === false) { %>
+  <a href="/notes/<%= book.id %>">
+      <img src="<%= book.coverUrl %>" alt="<%= book.title %> cover" class="book-cover-img" />
+      <h3>
+          <%=book.title%>
+      </h3>
+  </a>
+  <% } else { %>
+  <div>
+      <img src="<%= book.coverUrl %>" alt="<%= book.title %> cover" class="book-cover-img"/>
+      <h3>
+          <%=book.title%>
+      </h3>
+  </div>
+  <% } %>
+  <p>Date finished: <%= new Date(book.finished_reading).toLocaleDateString() %></p>
+  <p>Rating: <%= book.rating %>/5 &#9733</p>
+  <p><%= book.description %></p>
+  <% if(editing === false) { %>
+  <p>Check out my notes on <a href="/notes/<%= book.id %>">this link.</a></p>
+  <% } else { %>
+  <a href="/edit/<%= book.id %>"><button>Edit Book</button></a>
+  <button onclick="deleteBook(<%= book.id %>)">Delete Book</button>
+  <% } %>
 </div>
-<% } %>
-<p>Date finished: <%= new Date(book.finished_reading).toLocaleDateString() %></p>
-<p>Rating: <%= book.rating %>/5 &#9733</p>
-<p><%= book.description %></p>
-<% if(editing === false) { %>
-<p>Check out my notes on <a href="/notes/<%= book.id %>">this link.</a></p>
-<% } else { %>
-<a href="/edit/<%= book.id %>"><button>Edit Book</button></a>
-<button onclick="deleteBook(<%= book.id %>)">Delete Book</button>
-<% } %>
 <% } %>
 
 <% if(editing === true) { %>
+<div class="add-button">
 <br /><a href="/add"><button>Add Book</button></a>
+</div>
 <% } %>
 
 <%- include('partials/footer.ejs'); -%>
